@@ -31,16 +31,19 @@ app.get('/items', (req, res) => {
 // GET http://127.0.0.1:3000/items/<ID>
 app.get('/items/:id', (req, res) => {
   // TODO: palauta vain se objekti, jonka id vastaa pyydettyä
-  console.log('requested item id', req.params.id);
-  const requestedItem = items.find(item => item.id === requestedItemId);
-  if (!requestedItem) {
-    // Jos objektia ei löydy, palauta 404
-    return res.status(404).json({ error: 'Item not found' });
-  }
-  let item = 'tämän tilalle oikea objekti';
-  res.json(item);
-});
+  // Extract the requested ID from the URL
+  const requestedId = parseInt(req.params.id, 10);
 
+  // Find the item in the array
+  const item = items.find(item => item.id === requestedId);
+
+  // Check if the item was found
+  if (item) {
+    res.json(item);
+  } else {
+    res.status(404).json({ message: 'Item not found' });
+  }
+});
 
 // Itemin lisäys
 // POST http://127.0.0.1:3000/items/
@@ -52,7 +55,7 @@ app.post('/items', (req, res) => {
 // GET http://127.0.0.1:3000
 // ei toimi tällä hetkellä, koska public-server tarjoilee index.html:n ensin
 app.get('/', (req, res) => {
-  res.send('Welcome to my REST api!');
+  res.send('Tervetuloo tää kai toimii jotenki:)!');
 });
 
 app.listen(port, hostname, () => {

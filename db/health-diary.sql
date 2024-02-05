@@ -92,3 +92,9 @@ SELECT * FROM PhysicalActivity
 WHERE user_id = 1
 ORDER BY activity_date DESC
 LIMIT 1;
+
+DELETE FROM DiaryEntries
+WHERE entry_id = 3;
+
+SELECT * FROM DiaryEntries
+WHERE user_id = 1 AND entry_date BETWEEN '2024-01-01' AND '2024-01-31';

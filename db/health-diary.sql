@@ -52,3 +52,43 @@ SELECT Users.username, DiaryEntries.entry_date, DiaryEntries.mood, DiaryEntries.
 SELECT entry_date, mood, sleep_hours FROM DiaryEntries
   JOIN Users ON DiaryEntries.user_id = Users.user_id
   WHERE username = 'johndoe';
+
+
+-- Create a table for Physical Activity
+CREATE TABLE PhysicalActivity (
+    activity_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    activity_type VARCHAR(50) NOT NULL,
+    duration_minutes INT,
+    distance_km DECIMAL(5,2),
+    calories_burned INT,
+    activity_date DATE NOT NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+);
+
+INSERT INTO PhysicalActivity (user_id, activity_type, duration_minutes, distance_km, calories_burned, activity_date)
+VALUES
+    (1, 'Running', 30, 5.0, 300, '2024-01-15'),
+    (2, 'Cycling', 45, 10.0, 400, '2024-01-16'),
+    (1, 'Walking', 20, 2.0, 100, '2024-01-17');
+
+
+-- Think about use cases for the data from the application point of view and provide examples
+-- how to update, delete and query the data in a meaningful way
+
+UPDATE Users
+SET username = 'tarmo', email = 'tarmo@example.com'
+WHERE user_id = 1;
+
+INSERT INTO DiaryEntries (user_id, entry_date, mood, weight, sleep_hours, notes, created_at)
+VALUES (1, '2024-02-01', 'Energetic', 71.0, 7, 'Great workout today!', CURRENT_TIMESTAMP);
+
+UPDATE DiaryEntries
+SET mood = 'Relaxed', notes = 'Enjoyed a peaceful evening.'
+WHERE entry_id = 2;
+
+SELECT * FROM PhysicalActivity
+WHERE user_id = 1
+ORDER BY activity_date DESC
+LIMIT 1;

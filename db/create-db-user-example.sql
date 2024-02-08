@@ -1,3 +1,3 @@
-CREATE USER 'myusername'@'localhost' IDENTIFIED BY 'mypassword';
-GRANT ALL PRIVILEGES ON `databasename`.* TO 'myusername'@'localhost';
+CREATE USER 'ttinnar'@'localhost' IDENTIFIED BY 'Kissakissa1234';
+GRANT ALL PRIVILEGES ON `HealthDiary`.* TO 'ttinnar'@'localhost';
 FLUSH PRIVILEGES;

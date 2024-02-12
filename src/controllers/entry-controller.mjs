@@ -46,3 +46,42 @@ const deleteEntry = (req, res) => {
 };
 
 export {getEntries, getEntryById, postEntry, putEntry, deleteEntry};
+
+const Entry = require('../models/entry-model');
+
+class EntriesController {
+
+  getEntryById(req, res) {
+    const entryId = req.params.id;
+    Entry.getEntryById(entryId, (error, entry) => {
+      if (error) {
+        return res.status(404).json({ error: 'Entry not found' });
+      }
+      res.json(entry);
+    });
+  }
+
+  updateEntry(req, res) {
+    const entryId = req.params.id;
+    const { title, content } = req.body;
+    const updatedEntry = new Entry(entryId, title, content);
+    updatedEntry.update((error, entry) => {
+      if (error) {
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+      res.json(entry);
+    });
+  }
+
+  deleteEntry(req, res) {
+    const entryId = req.params.id;
+    Entry.deleteEntryById(entryId, (error) => {
+      if (error) {
+        return res.status(500).json({ error: 'Internal Server Error' });
+      }
+      res.status(204).send();
+    });
+  }
+}
+
+module.exports = new EntriesController();

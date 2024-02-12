@@ -6,78 +6,84 @@ import {
   updateUserById,
 } from '../models/user-model.mjs';
 
-// TODO: implement route handlers below for users (real data)
-
 const getUsers = async (req, res) => {
-  const result = await listAllUsers();
-  if (result.error) {
-    return res.status(result.error).json(result);
+  try {
+    const result = await listAllUsers();
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
-  return res.json(result);
 };
 
 const getUserById = async (req, res) => {
-  const result = await selectUserById(req.params.id);
-  if (result.error) {
-    return res.status(result.error).json(result);
+  try {
+    const result = await selectUserById(req.params.id);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
-  return res.json(result);
 };
 
 const postUser = async (req, res) => {
-  const {username, password, email} = req.body;
-  // check that all needed fields are included in request
-  if (username && password && email) {
+  const { username, password, email } = req.body;
+
+  if (!username || !password || !email) {
+    return res.status(400).json({ error: 'Bad Request', message: 'Missing required fields' });
+  }
+
+  try {
     const result = await insertUser(req.body);
-    if (result.error) {
-      return res.status(result.error).json(result);
-    }
     return res.status(201).json(result);
-  } else {
-    return res.status(400).json({error: 400, message: 'bad request'});
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 const putUser = async (req, res) => {
   const user_id = req.params.id;
-  const {username, password, email} = req.body;
-  // check that all needed fields are included in request
-  if (user_id && username && password && email) {
-    const result = await updateUserById({user_id, ...req.body});
-    if (result.error) {
-      return res.status(result.error).json(result);
-    }
-    return res.status(201).json(result);
-  } else {
-    return res.status(400).json({error: 400, message: 'bad request'});
+  const { username, password, email } = req.body;
+
+  if (!user_id || !username || !password || !email) {
+    return res.status(400).json({ error: 'Bad Request', message: 'Missing required fields' });
+  }
+
+  try {
+    const result = await updateUserById({ user_id, ...req.body });
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
 const deleteUser = async (req, res) => {
-  const result = await deleteUserById(req.params.id);
-  if (result.error) {
-    return res.status(result.error).json(result);
+  try {
+    const result = await deleteUserById(req.params.id);
+    return res.json(result);
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
-  return res.json(result);
 };
 
 // Dummy login with mock data, returns user object if username & password match
-const postLogin = (req, res) => {
+const postLogin = async (req, res) => {
   const userCreds = req.body;
+
   if (!userCreds.username || !userCreds.password) {
     return res.sendStatus(400);
   }
-  const userFound = users.find((user) => user.username == userCreds.username);
-  // user not found
-  if (!userFound) {
-    return res.status(403).json({error: 'username/password invalid'});
-  }
-  // check if posted password matches to user found password
-  if (userFound.password === userCreds.password) {
-    res.json({message: 'logged in successfully', user: userFound});
-  } else {
-    return res.status(403).json({error: 'username/password invalid'});
+
+  try {
+    const users = await listAllUsers();
+    const userFound = users.find((user) => user.username === userCreds.username);
+
+    if (!userFound || userFound.password !== userCreds.password) {
+      return res.status(403).json({ error: 'Username/password invalid' });
+    }
+
+    res.json({ message: 'Logged in successfully', user: userFound });
+  } catch (error) {
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
 
-export {getUsers, getUserById, postUser, putUser, postLogin, deleteUser};
+export { getUsers, getUserById, postUser, putUser, postLogin, deleteUser };

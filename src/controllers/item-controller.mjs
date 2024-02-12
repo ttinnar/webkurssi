@@ -44,18 +44,19 @@ const deleteItem = (req, res) => {
 };
 
 const putItem = (req, res) => {
-  // TODO: implement modify item
   const index = items.findIndex((item) => item.id == req.params.id);
-  // not found
   if (index === -1) {
     return res.sendStatus(404);
   }
   // bad request
   if (!req.body.name) {
-    return res.status(400).json({error: 'item name missing'});
+    return res.status(400).json({ error: 'item name missing' });
+  }
+  if (req.body.description) {
+    items[index].description = req.body.description;
   }
   items[index].name = req.body.name;
-  res.json({updated_item: items[index]});
+  res.json({ updated_item: items[index] });
 };
 
 export {getItems, getItemById, postItem, deleteItem, putItem};

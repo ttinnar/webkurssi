@@ -38,3 +38,4 @@ import promisePool from '../utils/database.mjs';
   };
 
   export {listAllEntries, findEntryById, addEntry};
+

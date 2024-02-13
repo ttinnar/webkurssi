@@ -1,4 +1,10 @@
-import {listAllEntries, findEntryById, addEntry} from "../models/entry-model.mjs";
+import {
+  listAllEntries,
+  findEntryById,
+  addEntry,
+  deleteEntryById,
+  updateEntryById,
+} from '../models/entry-model.mjs';
 
 const getEntries = async (req, res) => {
   const result = await listAllEntries();
@@ -35,53 +41,27 @@ const postEntry = async (req, res) => {
   }
 };
 
-const putEntry = (req, res) => {
-  // placeholder for future implementation
-  res.sendStatus(200);
+const putEntry = async (req, res) => {
+  const entry_id = req.params.id;
+  const {entry_date, mood, weight, sleep_hours, notes} = req.body;
+  // check that all needed fields are included in request
+  if ((entry_date || weight || mood || sleep_hours || notes) && entry_id) {
+    const result = await updateEntryById({entry_id, ...req.body});
+    if (result.error) {
+      return res.status(result.error).json(result);
+    }
+    return res.status(201).json(result);
+  } else {
+    return res.status(400).json({error: 400, message: 'bad request'});
+  }
 };
 
-const deleteEntry = (req, res) => {
-  // placeholder for future implementation
-  res.sendStatus(200);
+const deleteEntry = async (req, res) => {
+  const result = await deleteEntryById(req.params.id);
+  if (result.error) {
+    return res.status(result.error).json(result);
+  }
+  return res.json(result);
 };
 
 export {getEntries, getEntryById, postEntry, putEntry, deleteEntry};
-
-const Entry = require('../models/entry-model');
-
-class EntriesController {
-
-  getEntryById(req, res) {
-    const entryId = req.params.id;
-    Entry.getEntryById(entryId, (error, entry) => {
-      if (error) {
-        return res.status(404).json({ error: 'Entry not found' });
-      }
-      res.json(entry);
-    });
-  }
-
-  updateEntry(req, res) {
-    const entryId = req.params.id;
-    const { title, content } = req.body;
-    const updatedEntry = new Entry(entryId, title, content);
-    updatedEntry.update((error, entry) => {
-      if (error) {
-        return res.status(500).json({ error: 'Internal Server Error' });
-      }
-      res.json(entry);
-    });
-  }
-
-  deleteEntry(req, res) {
-    const entryId = req.params.id;
-    Entry.deleteEntryById(entryId, (error) => {
-      if (error) {
-        return res.status(500).json({ error: 'Internal Server Error' });
-      }
-      res.status(204).send();
-    });
-  }
-}
-
-module.exports = new EntriesController();

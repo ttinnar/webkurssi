@@ -17,13 +17,4 @@ const authenticateToken = (req, res, next) => {
   }
 };
 
-const isOwner = (req, res, next) => {
-  // Check if the user is the owner of the resource based on the request parameters
-  if (req.user && req.user.id === req.params.id) {
-    next();
-  } else {
-    return res.status(403).json({error: 'Forbidden'});
-  }
-};
-
-export {authenticateToken, isOwner};
+export {authenticateToken};

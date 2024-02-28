@@ -1,24 +1,33 @@
 import express from 'express';
 import {
-  deleteItem,
-  getItemById,
-  getItems,
-  postItem,
-  putItem,
-} from '../controllers/item-controller.mjs';
+  getUserById,
+  getUsers,
+  postUser,
+  putUser,
+  deleteUser,
+} from '../controllers/user-controller.mjs';
+import {authenticateToken} from '../middlewares/authentication.mjs';
 
-const itemRouter = express.Router();
+// eslint-disable-next-line new-cap
+const userRouter = express.Router();
 
-// define routes here
-// GET http://127.0.0.1:3000/items
-itemRouter.get('/', getItems);
-// GET http://127.0.0.1:3000/items/<ID>
-itemRouter.get('/:id', getItemById);
-// POST http://127.0.0.1:3000/items/ (Itemin lisäys)
-itemRouter.post('/', postItem);
-// PUT
-itemRouter.put('/:id', putItem);
-// DELETE
-itemRouter.delete('/:id', deleteItem);
+// /user endpoint
+userRouter
+  // eslint-disable-next-line indent
+  .route('/')
+  // list users
+  .get(authenticateToken, getUsers)
+  // update user
+  .put(authenticateToken, putUser)
+  // user registration
+  .post(postUser);
 
-export default itemRouter;
+// /user/:id endpoint
+userRouter
+  .route('/:id')
+  // get info of a user
+  .get(authenticateToken, getUserById)
+  // delete user based on id
+  .delete(authenticateToken, deleteUser);
+
+export default userRouter;

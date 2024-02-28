@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import promisePool from '../utils/database.mjs';console.log
 
 const listAllUsers = async () => {
@@ -34,14 +33,9 @@ const selectUserById = async (id) => {
 
 const insertUser = async (user) => {
   try {
-    // Generate a salt
-    const salt = await bcrypt.genSalt(10);
-    // Hash the user's password with the generated salt
-    const hashedPassword = await bcrypt.hash(user.password, salt);
-
     const sql =
-      'INSERT INTO Users (username, hashedPassword, email) VALUES (?, ?, ?)';
-    const params = [user.username, hashedPassword, user.email];
+      'INSERT INTO Users (username, password, email) VALUES (?, ?, ?)';
+    const params = [user.username, user.password, user.email];
     const [result] = await promisePool.query(sql, params);
     // console.log(result);
     return {message: 'new user created', user_id: result.insertId};
@@ -88,28 +82,11 @@ const deleteUserById = async (id) => {
 // Used for login
 const selectUserByUsername = async (username) => {
   try {
-    const sql = 'SELECT username, hashedPassword FROM Users WHERE username=?';
+    const sql = 'SELECT * FROM Users WHERE username=?';
     const params = [username];
     const [rows] = await promisePool.query(sql, params);
     // console.log(rows);
     // if nothing is found with the username, login attempt has failed
-    if (rows.length === 0) {
-      return {error: 401, message: 'invalid username or password'};
-    }
-    return rows[0];
-  } catch (error) {
-    console.error('selectUserByUsername', error);
-    return {error: 500, message: 'db error'};
-  }
-};
-
-
-const selectUserByNameAndPassword = async (user) => {
-  try {
-    const sql = 'SELECT user_id, username, email, user_level_id FROM Users WHERE username = ? AND password = ?';
-    const params = [user];
-    const [rows] = await promisePool.query(sql, params);
-    // if nothing is found with the user, login attempt has failed
     if (rows.length === 0) {
       return {error: 401, message: 'invalid username or password'};
     }
@@ -127,5 +104,4 @@ export {
   updateUserById,
   deleteUserById,
   selectUserByUsername,
-  selectUserByNameAndPassword,
 };

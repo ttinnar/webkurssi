@@ -6,7 +6,7 @@ import {
   putUser,
   deleteUser,
 } from '../controllers/user-controller.mjs';
-import {authenticateToken, isOwner} from '../middlewares/authentication.mjs';
+import {authenticateToken} from '../middlewares/authentication.mjs';
 
 // eslint-disable-next-line new-cap
 const userRouter = express.Router();
@@ -18,7 +18,7 @@ userRouter
   // list users
   .get(authenticateToken, getUsers)
   // update user
-  .put(authenticateToken, isOwner, putUser)
+  .put(authenticateToken, putUser)
   // user registration
   .post(postUser);
 
@@ -28,6 +28,6 @@ userRouter
   // get info of a user
   .get(authenticateToken, getUserById)
   // delete user based on id
-  .delete(authenticateToken, isOwner, deleteUser);
+  .delete(authenticateToken, deleteUser);
 
 export default userRouter;

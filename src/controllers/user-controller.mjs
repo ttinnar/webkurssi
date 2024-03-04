@@ -24,7 +24,7 @@ const getUserById = async (req, res) => {
   return res.json(result);
 };
 
-const postUser = async (req, res) => {
+const postUser = async (req, res, next) => {
   const {username, password, email} = req.body;
   const validationErrors = validationResult(req);
   console.log('user validation errors', validationErrors);
@@ -36,34 +36,28 @@ const postUser = async (req, res) => {
       username,
       email,
       password: hashedPassword,
-    });
-    if (result.error) {
-      return res.status(result.error).json(result);
-    }
+    }, next);
     return res.status(201).json(result);
   } else {
-    return res
-      .status(400)
-      .json({
-        error: 400,
-        message: 'bad request',
-        errors: validationErrors.errors,
-      });
+    const error = new Error('bad request');
+    error.status = 400;
+    error.errors = validationErrors.errors;
+    return next(error);
   }
 };
 
 // Only user authenticated by token can update own data
 const putUser = async (req, res) => {
   // Get userinfo from req.user object extracted from token
-  const user_id = req.user.user_id;
+  const userId = req.user.user_id;
   const {username, password, email} = req.body;
   // hash password if included in request
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   // check that all needed fields are included in request
-  if (user_id && username && password && email) {
+  if (userId && username && password && email) {
     const result = await updateUserById({
-      user_id,
+      userId,
       username,
       password: hashedPassword,
       email,

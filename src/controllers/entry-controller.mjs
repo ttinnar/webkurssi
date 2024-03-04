@@ -5,6 +5,10 @@ import {
   updateEntryById,
   listAllEntriesByUserId,
 } from '../models/entry-model.mjs';
+import {
+  errorHandler,
+  notFoundHandler,
+} from '../middlewares/error-handler.mjs';
 
 const getEntries = async (req, res) => {
   // return only logged in user's own entries
@@ -13,8 +17,7 @@ const getEntries = async (req, res) => {
   if (!result.error) {
     res.json(result);
   } else {
-    res.status(500);
-    res.json(result);
+    errorHandler;
   }
 };
 
@@ -23,7 +26,7 @@ const getEntryById = async (req, res) => {
   if (entry) {
     res.json(entry);
   } else {
-    res.sendStatus(404);
+    notFoundHandler;
   }
 };
 
@@ -44,8 +47,7 @@ const postEntry = async (req, res) => {
       res.status(201);
       res.json({message: 'New entry added.', ...result});
     } else {
-      res.status(500);
-      res.json(result);
+      errorHandler;
     }
   } else {
     res.sendStatus(400);

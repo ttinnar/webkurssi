@@ -16,11 +16,12 @@ entryRouter.route('/')
   // TODO: add authentication and input validation
   .post(
     body('mood').trim().isLength({min: 3, max: 40}).isAlphanumeric(),
-    body('weight').trim().isLength({min: 1, max: 6}).isAlphanumeric(),
-    body('sleep_hours').trim().isLength({max: 2}).isAlphanumeric(),
-    body('password').trim().isLength({min: 4, max: 128}).isAlphanumeric(),
+    body('weight').trim().isLength({min: 1, max: 6}).isNumeric(),
+    body('sleep_hours').trim().isLength({max: 5}).isFloat({min: 0}),
+    body('notes').trim().isLength({min: 4, max: 128}).isAlphanumeric(),
     postEntry,
   );
+
 
 entryRouter.route('/:id').get(getEntryById).put(putEntry).delete(deleteEntry);
 

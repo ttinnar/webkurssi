@@ -23,7 +23,7 @@ userRouter
   // user registration
   .post(
     body('username').trim().isLength({min: 3, max: 20}).isAlphanumeric(),
-    body('password').trim().isLength({min: 8, max: 128}),
+    body('password').trim().isLength({min: 3, max: 128}),
     body('email').trim().isEmail(),
     postUser,
   );

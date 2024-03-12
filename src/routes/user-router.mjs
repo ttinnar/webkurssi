@@ -1,5 +1,5 @@
 import express from 'express';
-import {body} from 'express-validator';
+import {body, param} from 'express-validator';
 import {
   getUserById,
   getUsers,
@@ -8,23 +8,61 @@ import {
   deleteUser,
 } from '../controllers/user-controller.mjs';
 import {authenticateToken} from '../middlewares/authentication.mjs';
+import {validationErrorHandler} from '../middlewares/error-handler.mjs';
 
-// eslint-disable-next-line new-cap
 const userRouter = express.Router();
 
-// /user endpoint
+// /api/user endpoint
 userRouter
-  // eslint-disable-next-line indent
   .route('/')
-  // list users
+  /**
+   * @api {get} /users Request user list
+   * @apiName GetUsers
+   * @apiGroup Users
+   * @apiPermission token
+   *
+   * @apiSuccess {Array} user[] array of Users.
+   * @apiSuccess {Object} user User object.
+   * @apiSuccess {Number} user.user_id Id of the user.
+   * @apiSuccess {String} user.username Username
+   * @apiSuccess {String} user.user_level Userlevel of the User.
+   *
+   * TODO: add example response
+   *
+   * @apiUse InvalidTokenError
+   */
   .get(authenticateToken, getUsers)
   // update user
-  .put(authenticateToken, putUser)
+  .put(
+    authenticateToken,
+    body('username', 'username must be 3-20 characters long and alphanumeric')
+      .trim()
+      .isLength({min: 3, max: 20})
+      .isAlphanumeric(),
+    body('password', 'minimum password length is 8 characters')
+      .trim()
+      .isLength({min: 8, max: 128}),
+    body('email', 'must be a valid email address')
+      .trim()
+      .isEmail()
+      .normalizeEmail(),
+    validationErrorHandler,
+    putUser,
+  )
   // user registration
   .post(
-    body('username').trim().isLength({min: 3, max: 20}).isAlphanumeric(),
-    body('password').trim().isLength({min: 3, max: 128}),
-    body('email').trim().isEmail(),
+    body('username', 'username must be 3-20 characters long and alphanumeric')
+      .trim()
+      .isLength({min: 3, max: 20})
+      .isAlphanumeric(),
+    body('password', 'minimum password length is 8 characters')
+      .trim()
+      .isLength({min: 8, max: 128}),
+    body('email', 'must be a valid email address')
+      .trim()
+      .isEmail()
+      .normalizeEmail(),
+    validationErrorHandler,
     postUser,
   );
 
@@ -32,8 +70,18 @@ userRouter
 userRouter
   .route('/:id')
   // get info of a user
-  .get(authenticateToken, getUserById)
+  .get(
+    authenticateToken,
+    param('id', 'must be integer').isInt(),
+    validationErrorHandler,
+    getUserById,
+  )
   // delete user based on id
-  .delete(authenticateToken, deleteUser);
+  .delete(
+    authenticateToken,
+    param('id', 'must be integer').isInt(),
+    validationErrorHandler,
+    deleteUser,
+  );
 
 export default userRouter;

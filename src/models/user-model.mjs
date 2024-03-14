@@ -34,7 +34,7 @@ const selectUserById = async (id) => {
 const insertUser = async (user, next) => {
   try {
     const sql =
-      'INSERT INTO Users (username, password, email) VALUES (?, ?, ?)';
+      'INSERT INTO users (username, password, email) VALUES (?, ?, ?)';
     const params = [user.username, user.password, user.email];
     const [result] = await promisePool.query(sql, params);
     // console.log(result);

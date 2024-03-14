@@ -5,15 +5,23 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-    <script type="module" crossorigin src="/assets/home-DnV3YG2W.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/fetch-DF9i_hLf.js">
-    <link rel="stylesheet" crossorigin href="/assets/fetch-EGXkK51f.css">
+    <script type="module" crossorigin src="/assets/home-DjD8Movp.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/fetch-CnchB4-9.js">
+    <link rel="stylesheet" crossorigin href="/assets/fetch-DzxH96MK.css">
   </head>
 
   <body>
-    <h3>/api/users - CREATE USER</h3>
+    <ul>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="index.html">Tietoja</a></li>
+      <li style="float: right" class="active logout"><a href="">Logout</a></li>
+    </ul>
 
-    <pre><code>
+    <h1>Welcome to your workout diary!</h1>
+
+    <h3>CREATE USER</h3>
+
+    <!-- <pre><code>
       # Create user
       POST http://127.0.0.1:3000/api/users
       content-type: application/json
@@ -23,28 +31,19 @@
         "password": "test-pw-update4",
         "email": "update4@example.com"
       }
-      </code></pre>
+      </code></pre> -->
 
     <form class="create_user_form">
       <label for="username">Username</label>
-      <input type="text" name="username" placeholder="test-update4" />
+      <input type="text" name="username" placeholder="username" />
       <label for="password">Password</label>
-      <input type="password" name="password" placeholder="test-pw-update4" />
+      <input type="password" name="password" placeholder="password" />
       <label for="email">Email</label>
-      <input type="email" name="email" placeholder="update4@example.com" />
+      <input type="email" name="email" placeholder="example@email.com" />
       <input name="submit" type="submit" value="Post and log to console" class="createuser" />
     </form>
-    <h3>/api/auth - LOGIN USER</h3>
-    <pre><code>
-      # Login
-      POST http://localhost:3000/api/auth/login
-      content-type: application/json
-      
-      {
-        "username": "user",
-        "password": "secret"
-      }
-      </code></pre>
+    <h3>LOGIN USER</h3>
+
     <div>
       <form class="login_form">
         <label for="username">Username</label>
@@ -54,25 +53,27 @@
         <input name="submit" type="submit" value="Login and get new token" class="loginuser" />
       </form>
       <br />
-      <h5>TOKEN:</h5>
-      <div id="loginResponse"></div>
-    </div>
-    <h3>/api/auth - USER INFO</h3>
-    <div>
-      <pre><code>
-        # Get user info by token (requires token)
-        GET http://localhost:3000/api/auth/me
-        Authorization: Bearer (put-user-token-here)</code></pre>
-      <button id="meRequest">Make an "authenticated" request</button>
-      <br />
-      <h5>USER INFO:</h5>
-      <div id="meResponse"></div>
-    </div>
-    <h3>Local Storage</h3>
-    <div>
-      <button id="clearButton">Clear localStorage</button>
-      <br />
-      <code id="clearResponse"></code>
+
+      <div id=hidden>
+        <h5>TOKEN:</h5>
+        <div id="loginResponse"></div>
+      <h3>/api/auth - USER INFO</h3>
+      <div>
+        <pre><code>
+          # Get user info by token (requires token)
+          GET http://localhost:3000/api/auth/me
+          Authorization: Bearer (put-user-token-here)</code></pre>
+        <button id="meRequest">Make an "authenticated" request</button>
+        <br />
+        <h5>USER INFO:</h5>
+        <div id="meResponse"></div>
+      </div>
+      <h3>Local Storage</h3>
+      <div>
+        <button id="clearButton">Clear localStorage</button>
+        <br />
+        <code id="clearResponse"></code>
+      </div>
     </div>
   </body>
 

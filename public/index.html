@@ -5,14 +5,14 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-    <script type="module" crossorigin src="/assets/main-C0inWRvT.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/fetch-DF9i_hLf.js">
-    <link rel="stylesheet" crossorigin href="/assets/fetch-EGXkK51f.css">
+    <script type="module" crossorigin src="/assets/main-jpNB1VYl.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/fetch-CnchB4-9.js">
+    <link rel="stylesheet" crossorigin href="/assets/fetch-DzxH96MK.css">
   </head>
   <body>
     <ul>
-      <li><a href="#home">Esimerkkisivusto</a></li>
-      <li><a href="#news">Tietoja</a></li>
+      <li><a href="home.html">Home</a></li>
+      <li><a href="index.html">Tietoja</a></li>
       <li style="float: right" class="active logout"><a href="">Logout</a></li>
     </ul>
 
@@ -20,7 +20,6 @@
 
     <div class="user">Hei kirjautunut käyttäjä: <span id="name">NIMI TÄHÄN</span>!</div>
 
-    <h3>/api/users</h3>
 
  
         <!-- and so on... -->
@@ -43,23 +42,12 @@
           metodilla.
         </p>
 
-        <pre><code>
-          # Get all users (requires token)
-          GET http://127.0.0.1:3000/api/users
-          
-          # Get user by id (requires token)
-          GET http://127.0.0.1:3000/api/users/:id
-          
-          # Delete user (requires token)
-          DELETE http://127.0.0.1:3000/api/users/:id
-          </code></pre>
-
         <table class="styled-table">
           <thead>
             <tr>
-              <th>User Name</th>
-              <th>User Level</th>
-              <th>Info</th>
+              <th>Workout name</th>
+              <th>Weight lifted</th>
+              <th>Reps</th>
               <th>Delete</th>
               <th>ID</th>
             </tr>

@@ -1,7 +1,4 @@
 import items from '../models/item-model.mjs';
-import {
-  notFoundHandler,
-} from '../middlewares/error-handler.mjs';
 
 const getItems = (req, res) => {
   res.json(items);
@@ -15,7 +12,7 @@ const getItemById = (req, res) => {
   if (itemFound) {
     res.json(itemFound);
   } else {
-    notFoundHandler;
+    res.status(404).json({error: 'not found'});
   }
 };
 
@@ -36,7 +33,8 @@ const postItem = (req, res) => {
 const deleteItem = (req, res) => {
   const index = items.findIndex((item) => item.id == req.params.id);
   if (index === -1) {
-    notFoundHandler;
+    // example how to send only the status code (still valid http response)
+    return res.sendStatus(404);
   }
   const deletedItems = items.splice(index, 1);
   console.log('deleteItem:', deletedItems);
@@ -50,7 +48,7 @@ const putItem = (req, res) => {
   const index = items.findIndex((item) => item.id == req.params.id);
   // not found
   if (index === -1) {
-    notFoundHandler;
+    return res.sendStatus(404);
   }
   // bad request
   if (!req.body.name) {

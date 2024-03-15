@@ -14,6 +14,7 @@ import {customError} from '../middlewares/error-handler.mjs';
  * @param {Object} res - Response object
  * @param {function} next - next function
  */
+
 const getUsers = async (req, res, next) => {
   const result = await listAllUsers();
   if (result.error) {

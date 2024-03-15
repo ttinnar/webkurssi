@@ -2,7 +2,7 @@ import promisePool from '../utils/database.mjs';
 
 const listAllEntries = async () => {
   try {
-    const [rows] = await promisePool.query('SELECT * FROM diaryentries');
+    const [rows] = await promisePool.query('SELECT * FROM DiaryEntries');
     // console.log('rows', rows);
     return rows;
   } catch (e) {
@@ -13,7 +13,7 @@ const listAllEntries = async () => {
 
 const listAllEntriesByUserId = async (id) => {
   try {
-    const sql = 'SELECT * FROM diaryentries WHERE user_id=?';
+    const sql = 'SELECT * FROM DiaryEntries WHERE user_id=?';
     const params = [id];
     const [rows] = await promisePool.query(sql, params);
     // console.log('rows', rows);
@@ -27,7 +27,7 @@ const listAllEntriesByUserId = async (id) => {
 const findEntryById = async (id, userId) => {
   try {
     const [rows] = await promisePool.query(
-      'SELECT * FROM diaryentries WHERE entry_id = ? AND user_id = ?',
+      'SELECT * FROM DiaryEntries WHERE entry_id = ? AND user_id = ?',
       [id, userId],
     );
     // console.log('rows', rows);
@@ -39,7 +39,7 @@ const findEntryById = async (id, userId) => {
 };
 
 const addEntry = async (entry, userId) => {
-  const sql = `INSERT INTO diaryentries
+  const sql = `INSERT INTO DiaryEntries
                (user_id, entry_date, mood, weight, sleep_hours, notes)
                VALUES (?, ?, ?, ?, ?, ?)`;
   const params = [
@@ -66,7 +66,7 @@ const updateEntryById = async (entryId, userId, entryData) => {
     // format() function is used to include only the fields that exists
     // in the entryData object to the SQL query
     const sql = promisePool.format(
-      `UPDATE diaryentries SET ?
+      `UPDATE DiaryEntries SET ?
        WHERE entry_id=? AND user_id=?`,
       params,
     );
@@ -86,7 +86,7 @@ const updateEntryById = async (entryId, userId, entryData) => {
 
 const deleteEntryById = async (id, userId) => {
   try {
-    const sql = 'DELETE FROM diaryentries WHERE entry_id=? AND user_id=?';
+    const sql = 'DELETE FROM DiaryEntries WHERE entry_id=? AND user_id=?';
     const params = [id, userId];
     const [result] = await promisePool.query(sql, params);
     // console.log(result);

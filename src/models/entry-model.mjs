@@ -1,8 +1,9 @@
+/* eslint-disable max-len */
 import promisePool from '../utils/database.mjs';
 
 const listAllEntries = async () => {
   try {
-    const [rows] = await promisePool.query('SELECT * FROM DiaryEntries');
+    const [rows] = await promisePool.query('SELECT * FROM Workout_diary_entries');
     // console.log('rows', rows);
     return rows;
   } catch (e) {
@@ -13,7 +14,7 @@ const listAllEntries = async () => {
 
 const listAllEntriesByUserId = async (id) => {
   try {
-    const sql = 'SELECT * FROM DiaryEntries WHERE user_id=?';
+    const sql = 'SELECT * FROM Workout_diary_entries WHERE user_id=?';
     const params = [id];
     const [rows] = await promisePool.query(sql, params);
     // console.log('rows', rows);
@@ -27,7 +28,7 @@ const listAllEntriesByUserId = async (id) => {
 const findEntryById = async (id, userId) => {
   try {
     const [rows] = await promisePool.query(
-      'SELECT * FROM DiaryEntries WHERE entry_id = ? AND user_id = ?',
+      'SELECT * FROM Workout_diary_entries WHERE entry_id = ? AND user_id = ?',
       [id, userId],
     );
     // console.log('rows', rows);
@@ -39,15 +40,15 @@ const findEntryById = async (id, userId) => {
 };
 
 const addEntry = async (entry, userId) => {
-  const sql = `INSERT INTO DiaryEntries
-               (user_id, entry_date, mood, weight, sleep_hours, notes)
+  const sql = `INSERT INTO Workout_diary_entries
+               (user_id, entry_date, workout_type, duration_minutes, intensity, notes)
                VALUES (?, ?, ?, ?, ?, ?)`;
   const params = [
     userId,
     entry.entry_date,
-    entry.mood,
-    entry.weight,
-    entry.sleep_hours,
+    entry.workout_type,
+    entry.duration_minutes,
+    entry.intensity,
     entry.notes,
   ];
   try {
@@ -66,7 +67,7 @@ const updateEntryById = async (entryId, userId, entryData) => {
     // format() function is used to include only the fields that exists
     // in the entryData object to the SQL query
     const sql = promisePool.format(
-      `UPDATE DiaryEntries SET ?
+      `UPDATE Workout_diary_entries SET ?
        WHERE entry_id=? AND user_id=?`,
       params,
     );
@@ -86,7 +87,8 @@ const updateEntryById = async (entryId, userId, entryData) => {
 
 const deleteEntryById = async (id, userId) => {
   try {
-    const sql = 'DELETE FROM DiaryEntries WHERE entry_id=? AND user_id=?';
+    // eslint-disable-next-line max-len
+    const sql = 'DELETE FROM Workout_diary_entries WHERE entry_id=? AND user_id=?';
     const params = [id, userId];
     const [result] = await promisePool.query(sql, params);
     // console.log(result);

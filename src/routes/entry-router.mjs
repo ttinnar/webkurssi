@@ -10,7 +10,7 @@ import {
 } from '../controllers/entry-controller.mjs';
 import {authenticateToken} from '../middlewares/authentication.mjs';
 import {validationErrorHandler} from '../middlewares/error-handler.mjs';
-import {startOfDay} from 'date-fns';
+
 
 const entryRouter = express.Router();
 

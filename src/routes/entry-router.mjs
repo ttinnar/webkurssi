@@ -19,7 +19,7 @@ entryRouter
   .get(authenticateToken, getEntries)
   .post(
     authenticateToken,
-    body('entry_date').optional().toDate().customSanitizer((value) => startOfDay(value)), // Poistaa aikaleiman
+    body('entry_date').optional().toDate(),
     body('workout').optional().trim().isLength({min: 3, max: 40}).isString(),
     body('duration').optional().isFloat({min: 1, max: 200}),
     body('intensity').optional({min: 0, max: 24}),

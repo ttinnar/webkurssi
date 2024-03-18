@@ -33,7 +33,7 @@ const postEntry = async (req, res, next) => {
   try {
     const userId = req.user.user_id;
     const result = await addEntry(req.body, userId);
-    res.status(201).json({ message: 'New entry added.', ...result });
+    res.status(201).json({message: 'New entry added.', ...result});
   } catch (error) {
     next(customError('Error adding entry', 500)); // Internal Server Error
   }

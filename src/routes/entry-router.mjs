@@ -41,7 +41,7 @@ entryRouter
     param('id', 'must be integer').isInt(),
     // user_id is not allowed to be changed
     body('user_id', 'not allowed').not().exists(),
-    body('entry_date').optional().toDate().customSanitizer((value) => startOfDay(value)), // Poistaa aikaleiman
+    body('entry_date').optional().toDate(),
     body('workout').optional().trim().isLength({min: 3, max: 20}).isString(),
     body('duration').optional().isFloat({min: 30, max: 200}),
     body('intensity').optional({min: 0, max: 24}),

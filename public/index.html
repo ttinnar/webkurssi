@@ -5,33 +5,35 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-    <script type="module" crossorigin src="/assets/main-DFfhCT5c.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/fetch-CWtgV7mw.js">
-    <link rel="stylesheet" crossorigin href="/assets/fetch-DzxH96MK.css">
+    <script type="module" crossorigin src="/assets/main-CVznq-OH.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/fetch-DIdBfUoL.js">
+    <link rel="stylesheet" crossorigin href="/assets/fetch-De6kYsYZ.css">
   </head>
 
   <body>
     <ul>
       <li><a href="index.html">log</a></li>
       <li><a href="home.html">home</a></li>
-      <li style="float: right" class="active logout"><a href="">Logout</a></li>
+      <li class="navbar-title">WORKOUT DIARY</li>
+      <li class="logout"><a href="">Logout</a></li>
     </ul>
 
     <h1>Welcome to your workout diary!</h1>
+    
+    <h2>LOGIN USER</h2>
 
-    <h3>CREATE USER</h3>
+    <div>
+      <form class="login_form">
+        <label for="username">Username</label>
+        <input type="text" name="username" placeholder="test" />
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="test" />
+        <input name="submit" type="submit" value="Login" class="loginuser" />
+      </form>
+      <br />
 
-    <!-- <pre><code>
-      # Create user
-      POST http://127.0.0.1:3000/api/users
-      content-type: application/json
-      
-      {
-        "username": "test-update4",
-        "password": "test-pw-update4",
-        "email": "update4@example.com"
-      }
-      </code></pre> -->
+    <h2>CREATE USER</h2>
+
 
     <form class="create_user_form">
       <label for="username">Username</label>
@@ -40,19 +42,10 @@
       <input type="password" name="password" placeholder="password" />
       <label for="email">Email</label>
       <input type="email" name="email" placeholder="example@email.com" />
-      <input name="submit" type="submit" value="Post and log to console" class="createuser" />
+      <input name="submit" type="submit" value="Create new user" class="createuser" />
     </form>
-    <h3>LOGIN USER</h3>
 
-    <div>
-      <form class="login_form">
-        <label for="username">Username</label>
-        <input type="text" name="username" placeholder="test" />
-        <label for="password">Password</label>
-        <input type="password" name="password" placeholder="test" />
-        <input name="submit" type="submit" value="Login and get new token" class="loginuser" />
-      </form>
-      <br />
+
 
       <div id=hidden>
         <h5>TOKEN:</h5>

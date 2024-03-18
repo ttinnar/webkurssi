@@ -41,13 +41,13 @@ const findEntryById = async (id, userId) => {
 
 const addEntry = async (entry, userId) => {
   const sql = `INSERT INTO Workout_diary_entries
-               (user_id, entry_date, workout_type, duration_minutes, intensity, notes)
+               (user_id, entry_date, workout, duration, intensity, notes)
                VALUES (?, ?, ?, ?, ?, ?)`;
   const params = [
     userId,
     entry.entry_date,
-    entry.workout_type,
-    entry.duration_minutes,
+    entry.workout,
+    entry.duration,
     entry.intensity,
     entry.notes,
   ];

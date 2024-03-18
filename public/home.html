@@ -5,116 +5,125 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite App</title>
-    <script type="module" crossorigin src="/assets/home-lKJfTYc2.js"></script>
-    <link rel="modulepreload" crossorigin href="/assets/fetch-CWtgV7mw.js">
-    <link rel="stylesheet" crossorigin href="/assets/fetch-DzxH96MK.css">
+    <script type="module" crossorigin src="/assets/home-DW-GEsqB.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/fetch-DIdBfUoL.js">
+    <link rel="stylesheet" crossorigin href="/assets/fetch-De6kYsYZ.css">
   </head>
   <body>
     <ul>
       <li><a href="index.html">log</a></li>
       <li><a href="home.html">home</a></li>
-      <li style="float: right" class="active logout"><a href="">Logout</a></li>
+      <li class="navbar-title">WORKOUT DIARY</li>
+      <li class="logout"><a href="">Logout</a></li>
     </ul>
+    
 
     <!-- <div id="app"></div> -->
 
-    <div class="user">Hei kirjautunut käyttäjä: <span id="name">NIMI TÄHÄN</span>!</div>
+    <div class="user">🎉 Welcome <span id="name">NIMI TÄHÄN</span>! 🎉</div>
 
+    </div>
+      <div style="flex: 1">
+        <h2>Create new workout diary entry</h2>
+        <p>Below you'll find a form to create a new workout diary entry! Remember to fill in each field accurately.</p>
 
- 
-        <!-- and so on... -->
-        <!-- Delete nappula poistaa käyttäjän-->
-        <!-- käytämme tässä apuna data-attribuutteja-->
-        <!-- # Delete user
-              DELETE http://127.0.0.1:3000/users/:id
-        -->
-      </tbody>
+          <div class="container" id="diary-container">
+            <!-- Form for new diary entry -->
+            <form method="post" id="entry_form">
+              <label for="workout">Add a workout: </label>
+              <select id="workout" name="workout">
+                <option value="placeholder" disabled selected hidden>Select your workout</option>
+                <option value="Strength Training">Strength Training</option>
+                <option value="Weightlifting">Weightlifting</option>
+                <option value="Yoga">Yoga</option>
+                <option value="Cycling">Cycling</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Volleyball">Volleyball</option>
+                <option value="Running">Running</option>
+                <option value="Walking">Walking</option>
+              </select>
+
+              <label for="duration">Workout duration (min):</label>
+              <input
+                type="number"
+                id="duration"
+                name="weight"
+                step="1"
+                placeholder="Enter duration"
+                step="0.1"
+                required
+              />
+
+              <label for="intensity">Workout intensity:</label>
+              <select id="intensity" name="intensity">
+                <option value="placeholder" disabled selected hidden>Select your workout intensity</option>
+                <option value="Low">Low</option>
+                <option value="Moderate">Moderate</option>
+                <option value="High">High</option>'
+              </select>
+
+              <label for="notes">Describe your workout:</label>
+              <textarea
+                id="notes"
+                name="notes"
+                rows="8"
+                placeholder="Enter additional notes"
+                style="resize: none"
+                maxlength="250"
+              ></textarea>
+              <!-- Submit button -->
+              <button type="submit" id="entry_submit">Create diary entry</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      </div>
     </table>
 
     <div class="forms">
-      <div style="flex: 1">
-        <h3>GET and DELETE</h3>
+      <div style="flex: 2">
+
+        <h2>Your workouts</h2>
 
         <p>
-          Hae käyttäjän tiedot painamalla alla olevaa nappia. Tämä hakee tiedot sekä luo taulukon
-          tbody osan. Jokaiselle riville luodaan nappula. Info hakee yksittäisen rivin tiedot ja
-          avaa dialogin. Delete poistaa yksittäisen rivin ja varmistaa tapahtuman confirm()
-          metodilla.
+          Below you will see two buttons. First you need to push the "search for workouts"-button
+          for application to put them into the list. Second button is for opening and closing the list.
+          <br>
+          <br>
+          After you have searched your workouts you can edit and delete them freely. 😊
         </p>
 
-        <table class="styled-table">
+        <table class="result-table">
+          <button class="get_entries">Search for workouts</button>
+          <button class="toggle_list">Open/Close list</button>
           <thead>
             <tr>
-              <th>Workout name</th>
-              <th>Weight lifted</th>
-              <th>Reps</th>
-              <th>Delete</th>
-              <th>ID</th>
+              <th>Date</th>
+              <th>Workout</th>
+              <th>Duration minutes</th>
+              <th>Intensity</th>
+              <th>Notes</th>
+              <th>Edit workout</th>
+              <th>Delete workout?</th>
             </tr>
           </thead>
           <tbody class="tbody">
-            <!-- tänne haetaan kaikki käyttäjät -->
-            <!-- # Get all users -->
-            <!-- GET http://127.0.0.1:3000/api/users -->
+            <!-- tänne haetaan kaikki merkinnät -->
+            <!-- # Get all entries -->
+            <!-- GET http://127.0.0.1:3000/api/entries -->
           </tbody>
         </table>
 
-        <button class="get_users">Hae users tiedot</button>
-      </div>
-      <div style="flex: 1">
-        <h3>PUT and FORMS</h3>
-
-        <p>
-          Lisää ja päivitä käyttäjiä eli users tiedot formin avulla. Formi lisää uuden käyttäjän
-          nappulasta 'post'. Huomio, että PUT metodi toimii vain kirjatuneen käyttäjän osalta. Eli voit vain muokata käyttäjää, millä olet parhaimmillaan kirjautuneena. Jatkossa olisi fiksua hakea käyttäjän tiedot suoraan formien INPUT kenttiin.
-        </p>
-
-        <pre><code>
-          
-          # Update user's own data (requires token)
-          PUT http://127.0.0.1:3000/api/users/
-          content-type: application/json
-          
-          {
-            "username": "test-update4",
-            "password": "test-pw-update4",
-            "email": "update4@example.com"
-          }
-          </code></pre>
-
-        <form class="addform">
-          <!-- tänne formi -->
-          <!-- https://www.w3schools.com/css/css_form.asp -->
-          <!-- https://www.w3schools.com/css/tryit.asp?filename=trycss_form_padding -->
-
-          <!-- formin avulla testaamme create ja update user reittejä -->
-        </form>
-      </div>
+        
+      
     </div>
+
+    <div id="snackbar-target"></div>
 
     <dialog class="info_dialog">
       <p>
-        <!-- tänne haetaan yksittäinen valittu käyttäjät -->      
-        <div>UserID: <span>Id</span></div>
-        <div>UserName: <span>Username</span></div>
-        <div>Email: <span>Email</span></div>
-        <div>Role: <span>Role</span></div> 
       </p>
       <button autofocus>Close</button>
-    </dialog>
-
-    <h3>Kotitehtävä, tee ja testaa kaikki: /api/entries</h3>
-
-    <p>Hae käyttäjän (user: 1) entires tiedot ja console.log</p>
-    <pre>
-      # Get entries by id
-      GET http://localhost:3000/api/entries/:id
-      
-    </pre>
-    <button class="get_entry">Hae (user:1) entries</button>
-    <table class="result-table">
-      <tbody class="result-body"></tbody>
-    </table>  
-
+    </dialog>
   </body>
 </html>

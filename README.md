@@ -14,7 +14,7 @@
 ![Näyttökuva 2024-03-19 134518](https://github.com/ttinnar/webkurssi-BE/assets/111982172/d8cfe0b2-2aad-4686-9741-b88fe683e857)
 ![Näyttökuva 2024-03-19 144117](https://github.com/ttinnar/webkurssi-BE/assets/111982172/71b97e3a-08cf-42e9-a446-52cac8ee51a6)
 
-### After logging in your redirected to your actual workout page where you can add entries:
+### After logging in you are redirected to your actual workout page where you can add entries:
 ![Näyttökuva 2024-03-19 134536](https://github.com/ttinnar/webkurssi-BE/assets/111982172/aa63ccd0-43b6-455f-9b17-b79e279a484a)
 ![Näyttökuva 2024-03-19 132624](https://github.com/ttinnar/webkurssi-BE/assets/111982172/759ae42c-85de-4336-bb0e-1b67cd2707d9)
 

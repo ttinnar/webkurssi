@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+    <script type="module" crossorigin src="/assets/main-DzU2qFKN.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/snackbar-ZwFHH3Ce.js">
+    <link rel="stylesheet" crossorigin href="/assets/snackbar-vIR2lkkK.css">
+  </head>
+
+  <body>
+    <ul>
+      <li><a>❚█══█❚</a></li>
+      <li class="navbar-title">WORKOUT DIARY</li>
+      <li class="logout"><a href="">Logout</a></li>
+    </ul>
+
+    <h1>Welcome to your workout diary!</h1>
+    
+    <h2>LOGIN USER</h2>
+
+    <div>
+      <form class="login_form">
+        <label for="username">Username</label>
+        <input type="text" name="username" placeholder="test" />
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="test" />
+        <input name="submit" type="submit" value="Login" class="loginuser" />
+      </form>
+      <br />
+
+    <h2>CREATE USER</h2>
+
+
+    <form class="create_user_form">
+      <label for="username">Username</label>
+      <input type="text" name="username" placeholder="username" />
+      <label for="password">Password</label>
+      <input type="password" name="password" placeholder="password" />
+      <label for="email">Email</label>
+      <input type="email" name="email" placeholder="example@email.com" />
+      <input name="submit" type="submit" value="Create new user" class="createuser" />
+    </form>
+
+
+
+      <div id=hidden>
+        <h5>TOKEN:</h5>
+        <div id="loginResponse"></div>
+      <h3>/api/auth - USER INFO</h3>
+      <div>
+        <pre><code>
+          # Get user info by token (requires token)
+          GET http://localhost:3000/api/auth/me
+          Authorization: Bearer (put-user-token-here)</code></pre>
+        <button id="meRequest">Make an "authenticated" request</button>
+        <br />
+        <h5>USER INFO:</h5>
+        <div id="meResponse"></div>
+      </div>
+      <h3>Local Storage</h3>
+      <div>
+        <button id="clearButton">Clear localStorage</button>
+        <br />
+        <code id="clearResponse"></code>
+      </div>
+    </div>
+  </body>
+
+</html>

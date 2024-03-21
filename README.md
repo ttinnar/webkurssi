@@ -5,7 +5,7 @@
 ## Here are some screenshots of the user interface.
 
 ### First the login page:
-![Näyttökuva 2024-03-19 134536](https://github.com/ttinnar/webkurssi-BE/assets/111982172/eaa853d2-2e1d-4321-aa35-0f6e7b0f0402)
+![Näyttökuva 2024-03-19 134459](https://github.com/ttinnar/webkurssi-BE/assets/111982172/5d92390c-e4a6-4393-b396-e77a6614b300)
 
 ### In that page you can also create a new account:
 ![Näyttökuva 2024-03-19 132105](https://github.com/ttinnar/webkurssi-BE/assets/111982172/aa5c047f-06b5-49a2-a24f-6e1a0a5f45e3)
